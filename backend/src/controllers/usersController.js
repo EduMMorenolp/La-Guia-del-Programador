@@ -40,3 +40,20 @@ export const deleteUser = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+export const getUserFavorites = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const { userIdFromJwt } = req.user;
+    if (userId !== userIdFromJwt) {
+      throw {
+        statusCode: 403,
+        message: `No puedes ver los favoritos de otro usuario`,
+      };
+    }
+    const favorites = await userService.fetchUserFavorites(userId);
+    res.status(200).json(favorites);
+  } catch (error) {
+    next(error);
+  }
+};

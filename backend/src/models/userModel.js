@@ -7,7 +7,7 @@ export const createUser = async ({
   try {
     const [result] = await global.dbConnection.execute(
       `
-            INSERT INTO usuario (nombre, email, password, rol) 
+            INSERT INTO usuario (nombre, email, password, rol)
             VALUES (?, ?, ?, ?)
         `,
       [nombre, email, password, rol]
@@ -38,8 +38,8 @@ export const updateUser = async (
   try {
     const [result] = await global.dbConnection.execute(
       `
-            UPDATE usuario 
-            SET nombre_usuario = ?, email = ?, contrasena = ? 
+            UPDATE usuario
+            SET nombre_usuario = ?, email = ?, contrasena = ?
             WHERE id_usuario = ?
         `,
       [nombre_usuario, email, contrasena, idUsuario]
@@ -75,6 +75,24 @@ export const deleteUser = async (idUsuario) => {
     }
 
     return true;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getUserFavorites = async (idUsuario) => {
+  try {
+    const [rows] = await global.dbConnection.execute(
+      `
+            SELECT f.id_favorito, r.id_recurso, r.titulo, r.descripcion, r.tipo_recurso, c.nombre AS categoria
+            FROM favorito f
+            JOIN recurso r ON f.id_recurso = r.id_recurso
+            LEFT JOIN categoria c ON r.id_categoria = c.id_categoria
+            WHERE f.id_usuario = ?;
+        `,
+      [idUsuario]
+    );
+    return rows;
   } catch (error) {
     throw error;
   }

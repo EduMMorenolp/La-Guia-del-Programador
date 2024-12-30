@@ -4,12 +4,13 @@ import express from 'express';
 import setupSwaggerV1 from '../swagger/v1/main.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { responseFormatter } from './middlewares/responseFormatter.js';
+import authRoutes from './routes/authRoutes.js';
+import favoritesRoutes from './routes/favoritesRoutes.js';
 import homeRoutes from './routes/home.Routes.js';
 import linksRoutes from './routes/linksRoutes.js';
-import videosRoutes from './routes/videosRoutes.js';
-import usersRoutes from './routes/usersRoutes.js';
 import suggestionsRoutes from './routes/suggestionsRoutes.js';
-import authRoutes from './routes/authRoutes.js';
+import usersRoutes from './routes/usersRoutes.js';
+import videosRoutes from './routes/videosRoutes.js';
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use('/api/v1/resources/links', linksRoutes);
 app.use('/', homeRoutes);
 app.use('/api/v1/users', usersRoutes);
 app.use('/api/v1/resources/suggestions', suggestionsRoutes);
+app.use('/api/v1/favorites', favoritesRoutes);
 
 // Rutas de autenticación
 app.use('/api/v1/auth', authRoutes);
