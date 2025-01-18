@@ -1,16 +1,17 @@
 export const createUser = async ({
   nombre,
   email,
-  password,
+  contrasena,
   rol = 'usuario',
 }) => {
   try {
+    console.log('Modelo recibe:', { nombre, email, contrasena, rol });
     const [result] = await global.dbConnection.execute(
       `
-            INSERT INTO usuario (nombre, email, password, rol)
+            INSERT INTO usuario (nombre_usuario, email, contrasena, rol)
             VALUES (?, ?, ?, ?)
         `,
-      [nombre, email, password, rol]
+      [nombre, email, contrasena, rol]
     );
 
     return { id_usuario: result.insertId };

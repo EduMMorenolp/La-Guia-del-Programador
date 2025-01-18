@@ -22,7 +22,7 @@ export const getUserByEmail = async (email) => {
  * @param {Object} user - Datos del usuario (nombre_usuario, email, contrasena).
  * @returns {Object} Usuario creado.
  */
-export const createUser = async (user) => {
+export const createUserService = async (user) => {
   const hashedPassword = await bcrypt.hash(user.contrasena, 10);
   const newUser = await userModel.createUser({
     ...user,
@@ -37,7 +37,7 @@ export const createUser = async (user) => {
  * @param {Object} user - Datos del usuario (nombre_usuario, email, contrasena).
  * @returns {Object} Usuario actualizado.
  */
-export const updateUser = async (userId, user) => {
+export const updateUserService = async (userId, user) => {
   const hashedPassword = await bcrypt.hash(user.contrasena, 10);
   const isUpdated = await userModel.updateUser(userId, {
     ...user,

@@ -5,7 +5,7 @@ export const getAllSuggestions = async (req, res) => {
     const suggestions = await suggestionService.getAllSuggestions();
     res.status(200).json({ success: true, data: suggestions });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    next(error);
   }
 };
 
@@ -21,6 +21,6 @@ export const createSuggestion = async (req, res) => {
     });
     res.status(201).json({ success: true, data: suggestion });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    next(error);
   }
 };
