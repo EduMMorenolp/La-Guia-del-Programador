@@ -51,11 +51,11 @@ export const deleteUser = async (req, res) => {
     const { userId } = req.params;
     const { id_usuario } = req.user;
 
-    // Verificar si el usuario tiene permiso para actualizar
+    // Verificar si el usuario tiene permiso para eliminar
     if (String(userId) !== String(id_usuario)) {
       return res.status(403).json({
         success: false,
-        message: 'No tienes permiso para actualizar este usuario',
+        message: 'No tienes permiso para eliminar este usuario',
       });
     }
     const result = await userService.deleteUser(userId);
@@ -67,6 +67,24 @@ export const deleteUser = async (req, res) => {
     res
       .status(200)
       .json({ success: true, message: 'Usuario eliminado exitosamente' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getUserFavorites = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const { id_usuario } = req.user;
+
+    if (String(userId) !== String(id_usuario)) {
+      throw {
+        statusCode: 403,
+        message: 'No tienes permiso para ver los favoritos de otro usuario',
+      };
+    }
+    const favorites = await userService.fetchUserFavorites(userId);
+    res.status(200).json(favorites);
   } catch (error) {
     next(error);
   }

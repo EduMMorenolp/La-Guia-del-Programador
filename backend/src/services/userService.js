@@ -1,5 +1,5 @@
-import * as userModel from '../models/userModel.js';
 import bcrypt from 'bcrypt';
+import * as userModel from '../models/userModel.js';
 
 /**
  * Obtiene un usuario por su email.
@@ -66,4 +66,13 @@ export const deleteUser = async (userId) => {
     };
   }
   return true;
+};
+
+/**
+ * Obtiene los favoritos de un usuario por su ID.
+ * @param {number} userId - ID del usuario.
+ * @returns {Object} Favoritos del usuario.
+ */
+export const fetchUserFavorites = async (userId) => {
+  return await userModel.getUserFavorites(userId);
 };

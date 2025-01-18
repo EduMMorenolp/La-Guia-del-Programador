@@ -9,5 +9,10 @@ const router = express.Router();
 router.post('/', usersController.createUser);
 router.put('/:userId', authenticateToken, usersController.updateUser);
 router.delete('/:userId', authenticateToken, usersController.deleteUser);
+router.get(
+  '/:userId/favorites',
+  authenticateToken,
+  usersController.getUserFavorites
+);
 
 export default router;
